@@ -1,5 +1,5 @@
 <?php 
-
+header('Access-Control-Allow-Origin: *');
 namespace frontend\controllers;
 
 use yii\rest\ActiveController;
