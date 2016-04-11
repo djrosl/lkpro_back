@@ -56,6 +56,13 @@ class ApiController extends Controller
                     'roles' => ['@'],
                 ],
             ],
+            'auth' => function ($username, $password) {
+                // Return Identity object or null
+                return common\models\User::findOne([
+                    'username' => $username,
+                    'password' => $password
+                ]);
+            },
         ];
 
         return $behaviors;
