@@ -72,7 +72,7 @@ class Database extends \yii\db\ActiveRecord
         return yii\helpers\ArrayHelper::merge($fields,[
             'image'=>function($model){
                 if(!is_null($model->getImage()))
-                    return 'http://admin.lkpro.loc'.$model->getImage()->getUrl();
+                    return 'http://admin.lkpro.acrux.tk'.$model->getImage()->getUrl();
             }
         ]);
     }
