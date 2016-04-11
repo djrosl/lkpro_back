@@ -24,8 +24,6 @@ class ApiController extends Controller
             header('Access-Control-Max-Age: 86400');    // cache for 1 day
         }
 
-        header('Www-Authenticate', '');
-
         // Access-Control headers are received during OPTIONS requests
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
