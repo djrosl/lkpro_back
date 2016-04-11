@@ -1,5 +1,5 @@
 <?php 
-header('Access-Control-Allow-Origin: *');
+
 namespace frontend\controllers;
 
 use yii\rest\ActiveController;
@@ -30,10 +30,27 @@ class HeaderController extends ActiveController
 
 
     public function behaviors(){
-        $this->cors();
-        $behaviors = parent::behaviors();
+        //$this->cors();
+        /*$behaviors = parent::behaviors();
 
-        return $behaviors;
+
+        return $behaviors;*/
+        return [
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => [],
+                'actions' => [
+                    'incoming' => [
+                        'Origin' => ['*'],
+                        'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                        'Access-Control-Request-Headers' => ['*'],
+                        'Access-Control-Allow-Credentials' => null,
+                        'Access-Control-Max-Age' => 86400,
+                        'Access-Control-Expose-Headers' => [],
+                    ],
+                ],
+            ],
+        ];
     }
 
 
