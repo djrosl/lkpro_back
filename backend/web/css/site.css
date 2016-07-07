@@ -2,7 +2,9 @@ html,
 body {
     height: 100%;
 }
-
+.fieldsToShow {
+    display: none;
+}
 .wrap {
     min-height: 100%;
     height: auto;
@@ -102,4 +104,40 @@ a.desc:after {
 
 .nav > li > form > button:hover {
     text-decoration: none;
+}
+.for-file-input {
+    font-size: 12px;
+    font-weight: lighter;
+    text-decoration: underline;
+    color: #3c8dbc;
+    cursor: pointer;
+}
+.for-file-input:hover {
+    text-decoration: none;
+}
+
+.fixed-alert {
+    position: fixed;
+    width: 200px;
+    top: 20px;
+    right: 20px;
+    z-index: 1031;
+    display: none;
+}
+
+.change-order-status {
+    margin-bottom: 20px;
+}
+
+span.color-0{
+    color: #ccc;
+}
+span.color-1{
+    color: yellow;
+}
+span.color-2{
+    color: green;
+}
+span.color-3{
+    color: red;
 }

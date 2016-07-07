@@ -25,6 +25,18 @@ class Buttons extends \yii\db\ActiveRecord
         return 'buttons';
     }
 
+
+    public function behaviors(){
+        return [
+            [
+                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
+                'relations' => [
+                    'fields' => 'fields',
+                ],
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -35,6 +47,7 @@ class Buttons extends \yii\db\ActiveRecord
             [['price', 'status', 'db_id'], 'integer'],
             [['help', 'example', 'time'], 'string'],
             [['title'], 'string', 'max' => 255],
+            [['fields'], 'safe'],
         ];
     }
 
@@ -55,6 +68,21 @@ class Buttons extends \yii\db\ActiveRecord
     }
 
     public function getDatabase() {
-        $this->hasOne(\common\models\Database::className(), ['db_id'=>'id']);
+        $this->hasOne(\common\models\Database::className(), ['id'=>'db_id']);
     }
+
+    public function getFields() {
+        return $this->hasMany(\common\models\Field::className(), ['id'=>'field_id'])
+            ->viaTable('button_field', ['button_id'=>'id']);
+    }
+
+    public function getOrderCount() {
+        return $this->hasMany(\common\models\Order::className(), ['id'=>'order_id'])
+            ->viaTable('order_button', ['button_id'=>'id'])->count();
+    }
+
+    public function getBfields() {
+        return $this->hasMany(\common\models\Button_field::className(), ['button_id'=>'id']);
+    }
+
 }

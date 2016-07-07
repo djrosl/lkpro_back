@@ -21,7 +21,8 @@
         "dmstr/yii2-adminlte-asset": "2.*",
         "2amigos/yii2-ckeditor-widget": "~1.0",
         "costa-rico/yii2-images": "dev-master",
-        "taktwerk/tw-yii2-rest": "^1.0"
+        "taktwerk/tw-yii2-rest": "^1.0",
+        "voskobovich/yii2-many-many-behavior": "^3.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

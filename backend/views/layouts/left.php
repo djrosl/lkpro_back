@@ -30,9 +30,25 @@
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
+                    ['label' => 'LKPRO ADMIN MENU', 'options' => ['class' => 'header']],
+                    ['label' => 'Проверки', 'url' => ['/database_types']],
+                    ['label' => 'Список всех проверок', 'url' => ['/buttons']],
+                    ['label' => 'Заказы', 'url' => ['/order']],
+                    ['label' => 'Поля заказов', 'url' => ['/field']],
+                    ['label' => 'Новости в шапке', 'url' => ['/header/update?id=1']],
+                    [
+                        'label' => 'Страница ПОМОЩЬ',
+                        'icon' => '',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Категории', 'icon' => '', 'url' => ['/help-category'],],
+                            ['label' => 'Записи', 'icon' => '', 'url' => ['/help'],],
+                        ]
+                    ],
+                    ['label' => 'Статистика', 'url' => ['/site/statistics']],
+                    ['label' => 'Варианты оплаты', 'url' => ['/cash-type']],
+                    ['label' => 'Операции с балансом', 'url' => ['/site/balance-operations']],
+                    /*
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',
@@ -59,7 +75,7 @@
                                 ],
                             ],
                         ],
-                    ],
+                    ],*/
                 ],
             ]
         ) ?>

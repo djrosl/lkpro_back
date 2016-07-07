@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Database Types'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php // Html::a(Yii::t('app', 'Create Database Types'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     
     <div class="box">
@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     </td>
                     <td><?=$model->show_title?></td>
                     <td><?=$model->slug?></td>
-                    <td><?=Html::a('Изменить', Url::to(['database_types/update', 'id'=>$model->id]))?></td>
-                    <td><?=Html::a('Удалить', Url::to(['database_types/delete', 'id'=>$model->id]))?></td>
+                    <td><?php //Html::a('Изменить', Url::to(['database_types/update', 'id'=>$model->id]))?></td>
+                    <td><?php //Html::a('Удалить', Url::to(['database_types/delete', 'id'=>$model->id]))?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

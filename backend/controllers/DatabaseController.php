@@ -83,7 +83,7 @@ class DatabaseController extends Controller
                 if(!is_null($model->getImage())) {
                     $model->removeImages($model->getImage());
                 }
-                $path = \Yii::getAlias('@webroot/images/').$model->image->baseName.'.'.$model->image->extension;
+                $path = \Yii::getAlias('@uploads/').$model->image->baseName.'.'.$model->image->extension;
                 $model->image->saveAs($path);
                 $model->attachImage($path);
                 $model->image = $model->getImage()->getUrl();
@@ -116,7 +116,7 @@ class DatabaseController extends Controller
                 if(!is_null($model->getImage())) {
                     $model->removeImage($model->getImage());
                 }
-                $path = \Yii::getAlias('@webroot/images/').$model->image->baseName.'.'.$model->image->extension;
+                $path = \Yii::getAlias('@uploads/').$model->image->baseName.'.'.$model->image->extension;
                 $model->image->saveAs($path);
                 $model->attachImage($path);
                 $model->image = $model->getImage()->getUrl();

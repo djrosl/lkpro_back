@@ -44,6 +44,15 @@ class ButtonsController extends Controller
         ]);
     }
 
+    public function actionRelated($database)
+    {
+        $models = \common\models\Database::findOne(['id'=>$database])->buttons;
+
+        return $this->render('related', [
+            'models'=>$models
+        ]);
+    }
+
     /**
      * Displays a single Buttons model.
      * @param integer $id
@@ -66,6 +75,17 @@ class ButtonsController extends Controller
         $model = new Buttons();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $post = Yii::$app->request->post();
+
+            foreach($model->fields as $field){
+                $field->required = 0;
+                $field->save();
+            }
+            foreach($post['field_required'] as $field_id=>$value){
+                $button_field = \common\models\Button_field::findOne(['button_id'=>$model->id, 'field_id'=>$field_id]);
+                $button_field->required = 1;
+                $button_field->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +105,19 @@ class ButtonsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $post = Yii::$app->request->post();
+
+            foreach($model->bfields as $field){
+                $field->required = 0;
+                $field->save();
+            }
+            if(!empty($post['field_required'])){
+                foreach($post['field_required'] as $field_id=>$value){
+                    $button_field = \common\models\Button_field::findOne(['button_id'=>$model->id, 'field_id'=>$field_id]);
+                    $button_field->required = 1;
+                    $button_field->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

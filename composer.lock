@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01cd8a6fef0f8b213b8a36f4e78353c0",
-    "content-hash": "aab41024a00208f119f3c90377615073",
+    "hash": "bfcae61dd78ae54d8a6b6fee7ac9ad88",
+    "content-hash": "f0a787fd5c049b48ebf78d2bbf4c549b",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -493,7 +493,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CostaRico/yii2-images/zipball/a8ce3925c86b86784d7f73b7b3ab6f773362491d",
+                "url": "https://api.github.com/repos/CostaRico/yii2-images/zipball/1de1d40f392589f2de96f840dab8636f46f63b6b",
                 "reference": "a8ce3925c86b86784d7f73b7b3ab6f773362491d",
                 "shasum": ""
             },
@@ -781,6 +781,55 @@
                 "yii2"
             ],
             "time": "2016-02-22 13:36:50"
+        },
+        {
+            "name": "voskobovich/yii2-many-many-behavior",
+            "version": "v3.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voskobovich/yii2-many-to-many-behavior.git",
+                "reference": "cb130c10aceefe57bd2d3b0544986d84026455ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voskobovich/yii2-many-to-many-behavior/zipball/cb130c10aceefe57bd2d3b0544986d84026455ae",
+                "reference": "cb130c10aceefe57bd2d3b0544986d84026455ae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "yiisoft/yii2-codeception": "~2.0"
+            },
+            "type": "yii2-behavior",
+            "autoload": {
+                "psr-4": {
+                    "voskobovich\\behaviors\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaly Voskobovich",
+                    "email": "vitaly@voskobovich.com",
+                    "homepage": "http://voskobovich.com"
+                }
+            ],
+            "description": "This behavior makes it easy to maintain relations many-to-many in the your ActiveRecord model.",
+            "homepage": "https://github.com/voskobovich/ManyToManyBehavior",
+            "keywords": [
+                "Active Record",
+                "Behavior",
+                "many-to-many",
+                "relation",
+                "yii2"
+            ],
+            "time": "2016-01-14 09:39:52"
         },
         {
             "name": "yiisoft/yii2",

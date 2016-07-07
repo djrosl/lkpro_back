@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <? Html::a(Yii::t('app', 'Create Type Sections'), ['create'], ['class' => 'btn btn-success']) ?>
+        <a href="<?=Url::to(['type_sections/create'])?>" class="btn btn-success">Создать</a>
     </p>
 
     <div class="box">

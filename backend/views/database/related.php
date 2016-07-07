@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\Type_sectionsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Type Sections');
+$this->title = Yii::t('app', 'Базы данных');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="type-sections-index">
@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <? Html::a(Yii::t('app', 'Create Type Sections'), ['create'], ['class' => 'btn btn-success']) ?>
+        <a href="<?=Url::to(['database/create'])?>" class="btn btn-success">Создать базу</a>
+        <a href="<?=Url::to(['buttons/create'])?>" class="btn btn-success">Создать проверку</a>
     </p>
 
     <div class="box">
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th></th>
+                    <th>Проверки</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -37,9 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?=$model->id?></td>
                     <td><?=$model->title?>
                     </td>
-                    <td><?=Html::a('Базы данных', Url::to(['database/related', 'section'=>$model->id]))?></td>
-                    <td><?=Html::a('Изменить', Url::to(['type_sections/update', 'id'=>$model->id]))?></td>
-                    <td><?=Html::a('Удалить', Url::to(['type_sections/delete', 'id'=>$model->id]))?></td>
+                    <td>
+                        <?php foreach($model->buttons as $button){
+                            echo '<p>'.Html::a($button->title, Url::to(['buttons/update', 'id'=>$button->id])).'</p>';
+                        } ?>
+                        <?php //Html::a('Все', Url::to(['buttons/related', 'database'=>$model->id]))?>
+                    </td>
+                    <td><?=Html::a('Изменить', Url::to(['database/update', 'id'=>$model->id]))?></td>
+                    <td><?=Html::a('Удалить', Url::to(['database/delete', 'id'=>$model->id]))?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

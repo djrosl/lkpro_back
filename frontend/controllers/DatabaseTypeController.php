@@ -44,7 +44,7 @@ class DatabaseTypeController extends ActiveController
                 }
             }
             try {
-                $provider = Database_types::find()->where(['slug'=>$get['slug']])->with('sections')->with('sections.databases')->with('sections.databases.buttons')->asArray()->one();
+                $provider = Database_types::find()->where(['slug'=>$get['slug']])->with('sections')->with('sections.databases')->with('sections.databases.buttons')->with('sections.databases.buttons.fields')->with('sections.databases.buttons.bfields')->asArray()->one();
 
             } catch (Exception $ex) {
                 throw new \yii\web\HttpException(500, 'Internal server error');

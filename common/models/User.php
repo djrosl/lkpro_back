@@ -24,8 +24,8 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
 
-    public $jabber;
-    public $icq;
+    /*public $jabber;
+    public $icq;*/
 
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
@@ -194,6 +194,18 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getCode() {
         return $this->hasOne(\common\models\Codes::className(), ['user_id'=>'id']);
+    }
+
+    public function getPassport() {
+        return $this->hasOne(\common\models\Passport::className(), ['user_id'=>'id']);
+    }
+
+    public function getBalance() {
+        return $this->hasOne(\common\models\Balance::className(), ['user_id'=>'id']);
+    }
+
+    public function getPayment() {
+        return $this->hasMany(\common\models\Payment::className(), ['user_id'=>'id']);
     }
 
 }

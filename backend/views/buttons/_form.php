@@ -19,6 +19,36 @@ use dosamigos\ckeditor\CKEditor;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
+    <?= $form->field($model, 'fields')
+    ->dropDownList(yii\helpers\ArrayHelper::map(\common\models\Field::find()->all(), 'id', 'title'),['multiple' => true]) ?>
+
+    <div id="required" class="form-group">
+        <h4 for="">Обьязательные поля</h4>
+        <div class="wrp">
+            <?php foreach($model->fields as $field): 
+                $checked = \common\models\Button_field::find()
+                ->where(['button_id'=>$model->id, 'field_id'=>$field->id])
+                ->select('required')->one();
+
+                $checked = $checked->required ? 'checked="checked"':'';
+            ?>
+            <input type="checkbox" name="field_required[<?=$field->id?>]"<?=$checked ?> id=""><label for=""><?=$field->title?></label><br>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#buttons-fields').change(function(){
+                $('#required .wrp').html('');
+                $.each($(this).children(':selected'), function(v){
+                    var html = '<input type="checkbox" name="field_required['+$(this).attr('value')+']" id=""><label for="">'+$(this).text()+'</label><br>';
+                    $('#required .wrp').append(html);
+                });
+            });
+        });
+    </script>
+
     <?= $form->field($model, 'help')->widget(CKEditor::className()) ?>
 
     <?= $form->field($model, 'example')->widget(CKEditor::className()) ?>
