@@ -167,21 +167,49 @@ class SiteController extends Controller
             $balance->user_id = $payment->user_id;
             $balance->summ = $balance->summ ? (int)$balance->summ + (int)$payment->summ : $payment->summ;
 
-            $order_buttons = \common\models\Order_button::find()
+            /*$order_buttons = \common\models\Order_button::find()
                 ->joinWith('order')
-                ->where(['order.user_id'=>$payment->user_id, 'order_button.status'=>0])
-                ->all();
+                ->where(['order.user_id'=>$payment->user_id, 'order_button.payed'=>0])
+                ->all();*/
 
-            foreach($order_buttons as $button){
+            $orders = \common\models\Order::find()
+            ->joinWith('orderbuttons')
+            ->where(['order.user_id'=>$payment->user_id, 'order_button.payed'=>0])->all();
+
+            foreach($orders as $order) {
+                if((int)$order->cost <= (int)$balance->summ){
+
+                    //save payment to payment-history user page
+                    $payment = new \common\models\Payment();
+                    $payment->status = 1;
+                    $payment->summ = (int)$order->cost*-1;
+                    $payment->user_id = $payment->user_id;
+                    $payment->date = new \yii\db\Expression('NOW()');
+                    $payment->type = 0;
+                    $payment->comment = 'Списание средств за заказ номер '.$order->id;
+                    $payment->save();
+
+                    foreach($order->orderbuttons as $button){
+                        if($balance->summ - (int)$button->button->price >= 0) {
+                            $balance->summ = $balance->summ - (int)$button->button->price;
+                            $button->payed = 1;
+                            $button->status = 0;
+                            $button->save();
+                        }
+                    }
+                }
+            }
+
+            /*foreach($order_buttons as $button){
                 if($balance->summ - (int)$button->button->price >= 0) {
                     $balance->summ = $balance->summ - (int)$button->button->price;
                     $button->payed = 1;
                     $button->save();
                 }
-            }
+            }*/
 
             if($balance->save()){
-                //$payment->status = 1;
+                $payment->status = 1;
                 $payment->save();
 
                 if(!$redirect) {

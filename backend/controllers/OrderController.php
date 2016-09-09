@@ -128,6 +128,22 @@ class OrderController extends Controller
         $order_button->status = $post['value'];
         $order_button->save();
 
+        if($post['value'] == 3 || $post['value'] == 4) {
+            $balance = \common\models\Balance::findOne(['user_id'=>$order_button->order->user_id]);
+            $balance->summ = $balance->summ+$order_button->button->price;
+
+            $balance->save();
+
+            $payment = new \common\models\Payment();
+            $payment->status = 1;
+            $payment->summ = (int)$order_button->button->price;
+            $payment->user_id = $order_button->order->user_id;
+            $payment->date = new \yii\db\Expression('NOW()');
+            $payment->type = 0;
+            $payment->comment = 'Возврат #'.$order_button->order->id.' / '.$order_button->button->title;
+            $payment->save();
+        }
+
         return 'Статус проверки успешно изменен.';
     }
 

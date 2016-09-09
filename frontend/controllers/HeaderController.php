@@ -7,6 +7,7 @@ use yii\rest\ActiveController;
 class HeaderController extends ActiveController
 {
 	public function cors() {
+
         // Allow from any origin
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");

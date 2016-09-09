@@ -119,7 +119,8 @@ class ApiController extends Controller
             'id'=>Yii::$app->user->identity->id,
             'username' => Yii::$app->user->identity->username,
             'access_token' => Yii::$app->user->identity->getAuthKey(),
-            'balance' => Yii::$app->user->identity->balance ? Yii::$app->user->identity->balance->summ : 0
+            'balance' => Yii::$app->user->identity->balance ? Yii::$app->user->identity->balance->summ : 0,
+            'header'=>\common\models\Header::find()->all()
         ];
         //$response['passport']['images'] = $imgs;
         return $response;
@@ -197,12 +198,24 @@ class ApiController extends Controller
 
         if($order->save()) {
             $balance = \common\models\Balance::find(['id'=>Yii::$app->user->identity->id])->one();
+            
+            if($balance->summ >= $order->cost) {
+                //save payment to payment-history user page
+                $payment = new \common\models\Payment();
+                $payment->status = 1;
+                $payment->summ = (int)$post['cost']*-1;
+                $payment->user_id = Yii::$app->user->identity->id;
+                $payment->date = new \yii\db\Expression('NOW()');
+                $payment->type = 0;
+                $payment->comment = 'Списание средств за заказ номер '.$order->id;
+                $payment->save();
+            }
 
             foreach($post['order'] as $button){
                 $order_button = new \common\models\Order_button();
                 $order_button->status = 0;
                 $order_button->payed = 0;
-                if($balance->summ - (int)$button['price'] >= 0) {
+                if($balance->summ >= $order->cost) {
                     $balance->summ = $balance->summ - (int)$button['price'];
                     $order_button->payed = 1;
                 }
@@ -219,7 +232,6 @@ class ApiController extends Controller
                     $order_field->save();
                 }
             }
-
             
             
             if($balance->save()){
@@ -230,7 +242,7 @@ class ApiController extends Controller
                 $order_payment->user_id = $order->user_id;
                 $order_payment->save();*/
 
-                return $balance->summ;
+                return ['balance'=>$balance->summ, 'id'=>$order->id];
             }
 
         } else {
@@ -351,7 +363,7 @@ class ApiController extends Controller
         $model->summ = $post['summ'];
         $model->date = date('Y-m-d H:i:s', strtotime($post['date']));
         $model->check = $post['check'];
-        $model->cash_type = $post['cash_type'];
+        $model->cash_type = (int)$post['cash_type']['id'];
 
 
         if($model->save()){
@@ -397,13 +409,31 @@ class ApiController extends Controller
 
         $path = \Yii::getAlias('@uploads/').$file->baseName.'-'.time().'.'.$file->extension;
         if($file->saveAs($path)) {
-            return [
-                'id'=>(int)Yii::$app->request->headers['FieldId'],
-                'path'=>$file->baseName.'-'.time().'.'.$file->extension
-            ];
+
+            $orderId = \common\models\Order::find()->orderBy('id DESC')->one()->id;
+            $fieldId = (int)Yii::$app->request->headers['FieldId'];
+
+            $field = \common\models\Order_field::findOne(['field_id'=>$fieldId, 'order_id'=>$orderId]);
+            if(!$field){
+                $field = new \common\models\Order_field();
+                $field->content = $file->baseName.'-'.time().'.'.$file->extension.';';
+            }
+            $field->content.=$file->baseName.'-'.time().'.'.$file->extension;
+
+            $field->order_id = $orderId;
+            $field->field_id = $fieldId;
+            
+
+            $field->save();
+
+            return $field;
         }
 
         return 'FAILED!';
+    }
+
+    public function actionHeader(){
+        return \common\models\Header::find()->asArray()->all();
     }
 
 }

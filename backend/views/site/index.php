@@ -128,7 +128,18 @@ $gridColumns = [
                                 <div class="fieldsToShow">
                                 <?php foreach($order_button->order->fields as $field){
                                     $content = $field->content;
-                                    echo $field->field->title.': '.$content.'<br>';
+                                    if($field->field->type == 4) {
+                                      echo $field->field->title.'<div class="images">';
+                                      foreach(explode(',data:', $content) as $k=>$src){
+                                        if($k) {
+                                          $src = 'data:'.$src; 
+                                        }
+                                        echo '<a target="_blank" href="'.$src.'">'.Html::img($src, ['width'=>'50']).'</a>';
+                                      }
+                                      echo '</div>';
+                                    } else {
+                                      echo $field->field->title.': '.$content.'<br>';
+                                    }
                                   } ?>
                                 </div>
                               </td>
